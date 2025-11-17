@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <audio id="music" src="music.m4a"></audio>
+  <title>Happy Birthday!</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      text-align: center;
+      padding: 40px;
+      color: #333;
+    }
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: 0 0 20px rgba(255,0,150,0.6); /* Neon Glow */
+      transition: box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 0 40px rgba(255,0,150,0.9), 0 0 60px rgba(255,0,150,0.7);
+    }
+
+    /* hearts */
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 5;
+    }
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      transform: rotate(45deg);
+      animation: float 6s linear infinite;
+    }
+    .heart:before, .heart:after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+    }
+    .heart:before { top: -10px; left: 0; }
+    .heart:after { left: -10px; top: 0; }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(45deg); opacity: 1; }
+      100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 14px;
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: 9999;
+      will-change: transform, opacity;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* Button */
+    #openBtn {
+      padding: 15px 25px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #ff7aa2;
+      color: white;
+      margin-top: 20px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Happy birthday ya Rokaa 🎉</h1>
+
+    <button id="openBtn">Klick here 💌</button>
+
+    <div id="letter" style="display:none; margin-top:30px;">
+      <p>
+        ركروكة 
+        كل سنة وانت طيبة وعقبال سنين كتير بخير وسعادة ودايما موجوده ومطلعة عيني كده 
+        لافيوووووووووووووووووووووووووووووووووووو
+      </p>
+      <p class="signature"> من ابرا</p>
+    </div>
+  </div>
+
+  <div class="hearts" id="hearts"></div>
+
+  <script>
+    // Hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 4 + Math.random() * 4 + "s";
+      document.getElementById("hearts").appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }
+    setInterval(createHeart, 500);
+
+    const openBtn = document.getElementById('openBtn');
+    const letter = document.getElementById('letter');
+    const music = document.getElementById('music');
+
+    openBtn.addEventListener('click', () => {
+      // Play music
+      music.volume = 0.6;
+      music.play();
+
+      // Show letter
+      letter.style.display = 'block';
+      openBtn.style.display = 'none';
+
+      // Typewriter effect
+      const textElement = letter.querySelector('p');
+      const fullText = textElement.textContent;
+      let index = 0;
+      textElement.textContent = '';
+
+      function typeWriter() {
+        if (index < fullText.length) {
+          textElement.textContent += fullText.charAt(index);
+          index++;
+          setTimeout(typeWriter, 30);
+        }
+      }
+      typeWriter();
+
+      // Confetti
+      const duration = 2000;
+      const end = Date.now() + duration;
+
+      (function frame() {
+        for (let i = 0; i < 8; i++) {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.top = '-20px';
+          confetti.style.background = 'hsl(' + Math.random() * 360 + ', 90%, 65%)';
+          confetti.style.width = (6 + Math.random() * 10) + 'px';
+          confetti.style.height = (8 + Math.random() * 12) + 'px';
+          confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+          confetti.style.animation = 'fall ' + (1.2 + Math.random() * 0.8) + 's linear forwards';
+          document.body.appendChild(confetti);
+          setTimeout(() => confetti.remove(), 2000);
+        }
+        if (Date.now() < end) requestAnimationFrame(frame);
+      })();
+    });
+  </script>
+</body>
+</html>
