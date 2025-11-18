@@ -90,13 +90,152 @@
       margin-top: 20px;
     }
 
+
+.party-girl {
+  position: relative;
+  width: 120px;
+  height: 200px;
+  margin: 40px auto;
+  animation: jumpDance 0.8s infinite ease-in-out;
+  transform-origin: bottom center;
+}
+
+/* Kopf */
+.girl-head {
+  width: 65px;
+  height: 65px;
+  background: #ffe2e2;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 27px;
+  border: 3px solid #ff7aa2;
+  animation: headWobble 1s infinite ease-in-out;
+}
+
+/* Haare */
+.girl-hair {
+  width: 75px;
+  height: 45px;
+  background: #ffb6d9;
+  border-radius: 50% 50% 60% 60%;
+  position: absolute;
+  top: -10px;
+  left: 22px;
+  animation: hairSwing 1.2s infinite ease-in-out;
+}
+
+/* Körper */
+.girl-body {
+  width: 60px;
+  height: 80px;
+  background: #ff7aa2;
+  border-radius: 25px;
+  position: absolute;
+  top: 70px;
+  left: 30px;
+  animation: bodyBounce 0.8s infinite ease-in-out;
+}
+
+/* Arme */
+.girl-arm {
+  width: 18px;
+  height: 70px;
+  background: #ffe2e2;
+  position: absolute;
+  top: 75px;
+  border-radius: 12px;
+  transform-origin: top center;
+}
+
+.girl-arm.left {
+  left: 5px;
+  animation: armWaveL 1s infinite ease-in-out;
+}
+
+.girl-arm.right {
+  right: 5px;
+  animation: armWaveR 1s infinite ease-in-out;
+}
+
+/* Beine */
+.girl-leg {
+  width: 20px;
+  height: 70px;
+  background: #ff7aa2;
+  position: absolute;
+  top: 150px;
+  border-radius: 14px;
+}
+
+.girl-leg.left { left: 30px; }
+.girl-leg.right { right: 30px; }
+
+/* Schatten */
+.girl-shadow {
+  width: 80px;
+  height: 15px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 50%;
+  position: absolute;
+  bottom: -10px;
+  left: 20px;
+  animation: shadowSqueeze 0.8s infinite ease-in-out;
+}
+
+/* ANIMATIONEN */
+
+@keyframes jumpDance {
+  0%   { transform: translateY(0) rotate(0deg); }
+  50%  { transform: translateY(-18px) rotate(3deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes headWobble {
+  0%   { transform: rotate(0deg); }
+  50%  { transform: rotate(4deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes hairSwing {
+  0%   { transform: rotate(0deg); }
+  50%  { transform: rotate(-6deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes bodyBounce {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@keyframes armWaveL {
+  0%   { transform: rotate(25deg); }
+  50%  { transform: rotate(55deg); }
+  100% { transform: rotate(25deg); }
+}
+
+@keyframes armWaveR {
+  0%   { transform: rotate(-25deg); }
+  50%  { transform: rotate(-55deg); }
+  100% { transform: rotate(-25deg); }
+}
+
+@keyframes shadowSqueeze {
+  0%   { transform: scaleX(1); }
+  50%  { transform: scaleX(0.8); }
+  100% { transform: scaleX(1); }
+}
+
+
+
   </style>
 </head>
 <body>
   <div class="card">
     <h1>Happy birthday ya Rokaa 🎉</h1>
 
-    <button id="openBtn">Klick here 💌</button>
+    <button id="openBtn">دوسي بقا على المفاجأة <br>💌</button>
 
     <div id="letter" style="display:none; margin-top:30px;">
       <p>
@@ -104,8 +243,24 @@
         كل سنة وانت طيبة وعقبال سنين كتير بخير وسعادة ودايما موجوده ومطلعة عيني كده 
         لافيوووووووووووووووووووووووووووووووووووو
       </p>
+      
     </div>
   </div>
+
+<div id="partyGirl" style="display:none;">
+  <div class="party-girl">
+    <div class="girl-hair"></div>
+    <div class="girl-head"></div>
+    <div class="girl-body"></div>
+    <div class="girl-arm left"></div>
+    <div class="girl-arm right"></div>
+    <div class="girl-leg left"></div>
+    <div class="girl-leg right"></div>
+    <div class="girl-shadow"></div>
+  </div>
+</div>
+
+
 
   <div class="hearts" id="hearts"></div>
 
@@ -124,8 +279,13 @@
     const openBtn = document.getElementById('openBtn');
     const letter = document.getElementById('letter');
     const music = document.getElementById('music');
+    // show party girl
+
 
     openBtn.addEventListener('click', () => {
+      
+      document.getElementById("partyGirl").style.display = "block";
+
       // Play music
       music.volume = 0.6;
       music.play();
@@ -173,4 +333,3 @@
   </script>
 </body>
 </html>
-
